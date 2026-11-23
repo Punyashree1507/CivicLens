@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-from werkzeug.utils import secure_filename
-from database import create_database, save_report, get_reports
+from database import create_database, save_report, get_reports, update_report_status
 import os
 import uuid
 
@@ -40,6 +39,7 @@ def home():
     return send_from_directory(FRONTEND_FOLDER, "index.html")
 
 
+# Submit complaint
 @app.route("/api/reports", methods=["POST"])
 def submit_report():
 
@@ -77,16 +77,36 @@ def submit_report():
     }), 201
 
 
+# View complaints
 @app.route("/api/reports", methods=["GET"])
 def view_reports():
     return jsonify(get_reports())
 
 
+# Update complaint status
+@app.route("/api/reports/<int:report_id>/status", methods=["PUT"])
+def change_status(report_id):
+
+    data = request.get_json(silent=True) or {}
+    status = data.get("status", "")
+
+    if status not in ["Pending", "In Progress", "Resolved"]:
+        return jsonify({"error": "Invalid status"}), 400
+
+    update_report_status(report_id, status)
+
+    return jsonify({
+        "message": "Status updated successfully!"
+    })
+
+
+# Display uploaded images
 @app.route("/uploads/<filename>")
 def uploaded_file(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
 
 
+# File size error
 @app.errorhandler(413)
 def file_too_large(error):
     return jsonify({

@@ -52,6 +52,18 @@ def get_reports():
     return [dict(report) for report in reports]
 
 
+def update_report_status(report_id, status):
+    conn = connect_db()
+
+    conn.execute(
+        "UPDATE reports SET status = ? WHERE id = ?",
+        (status, report_id)
+    )
+
+    conn.commit()
+    conn.close()
+
+
 if __name__ == "__main__":
     create_database()
     print("CivicLens Database Ready!")
