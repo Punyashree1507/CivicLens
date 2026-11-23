@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CivicLens</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>🌍 CivicLens</h1>
+        <p>Report Problems. Improve Your City.</p>
+    </header>
+
+    <main>
+
+        <section class="form-section">
+            <h2>Submit a Civic Complaint</h2>
+
+            <form id="reportForm">
+
+                <label>Complaint Category</label>
+                <select id="category" required>
+                    <option value="">Select Category</option>
+                    <option value="Road Damage">Road Damage</option>
+                    <option value="Garbage">Garbage</option>
+                    <option value="Water Leakage">Water Leakage</option>
+                    <option value="Street Light">Street Light</option>
+                    <option value="Drainage">Drainage</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label>Location</label>
+                <input
+                    type="text"
+                    id="location"
+                    placeholder="Enter your location"
+                    required
+                >
+
+                <label>Description</label>
+                <textarea
+                    id="description"
+                    placeholder="Describe the problem"
+                ></textarea>
+
+                <label>Upload Photo</label>
+                <input
+                    type="file"
+                    id="photo"
+                    accept="image/jpeg,image/png,image/webp"
+                    required
+                >
+
+                <button type="submit">Submit Report</button>
+
+            </form>
+
+            <p id="message"></p>
+        </section>
+
+        <section class="reports-section">
+            <h2>Submitted Reports</h2>
+            <div id="reportsList">Loading reports...</div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2026 CivicLens | Building Better Communities</p>
+    </footer>
+
+    <script src="/script.js"></script>
+
+</body>
+</html>
